@@ -9,33 +9,33 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 
 const AppRoutes = () => {
-  return (
-    <Routes>
-        <Route
-            path= '/'
-            element={<Dashboard />}>
-        </Route>
-        <Route
-            path= '/addons'
-            element={<IndexAddOns />} />
-       
-        <Route
-            path= '/combo'
-            element={<ViewCombo />}/>
+    return (
+        <Routes>
+            <Route
+                path='/'
+                element={<Dashboard />}>
+            </Route>
+            <Route
+                path='/addons'
+                element={<IndexAddOns />} />
 
-        <Route
-            path= '/discounts/'
-            element={<ViewDiscount />}/>
+            <Route
+                path='/combo'
+                element={<ViewCombo />} />
 
-        <Route
-            path= '/instory'
-            element={<ViewInstory />}/>
-        <Route
-            path= '/live'
-            element={<IndexLive />}/>
-        
-    </Routes>
-  )
+            <Route
+                path='/discounts/'
+                element={<ViewDiscount />} />
+
+            <Route
+                path='/instory'
+                element={<ViewInstory />} />
+            <Route
+                path='/live'
+                element={<IndexLive />} />
+
+        </Routes>
+    )
 }
 
 export default AppRoutes;

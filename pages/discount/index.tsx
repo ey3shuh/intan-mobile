@@ -5,7 +5,7 @@ import NavBar from '../Navbar'
 import AccViewDisc from './index-disc/AccViewDisc'
 import SearchIcon from '@mui/icons-material/Search';
 import Image from 'next/image'
-
+import '../../app/globals.css'
 
 
 const ViewDiscount = () => {

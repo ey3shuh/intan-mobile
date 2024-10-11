@@ -5,6 +5,7 @@ import NavBar from '@/pages/Navbar';
 import { Paper, IconButton, InputBase, Button } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search';
 import AccViewInstory from './index-instory/AccViewInstory';
+import '../../app/globals.css'
 
 const ViewInstory = () => {
   return (

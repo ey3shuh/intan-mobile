@@ -8,6 +8,7 @@ import Image from 'next/image';
 import Button from '@mui/material/Button';
 import AccViewAddOns from './index-addons/AccViewAddOns';
 import NavBar from '@/pages/Navbar';
+import '../../app/globals.css'
 
 const IndexAddOns = () => {
   return (

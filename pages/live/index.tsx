@@ -5,6 +5,7 @@ import NavBar from '@/pages/Navbar';
 import { Paper, IconButton, InputBase, Button } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search';
 import AccViewLive from './index-live/AccViewLive';
+import '../../app/globals.css'
 
 const IndexLive = () => {
   return (
