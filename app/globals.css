@@ -11,6 +11,7 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --custom-bg: #F1E6E2;
   }
 }
 
@@ -24,4 +25,15 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  .text-transform-none { /* Add the new utility class here */
+    text-transform: none; /* Prevent text from being uppercase */
+  }
+
+  @font-face {
+    font-family: 'SF Pro';
+    src: url('/fonts/SFProDisplay-Regular.ttf') format('truetype'); /* Add other font weights/styles as needed */
+    font-weight: normal;
+    font-style: normal;
+  }
+  
 }
