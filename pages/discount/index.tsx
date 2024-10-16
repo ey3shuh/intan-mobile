@@ -1,31 +1,34 @@
-import { Paper, IconButton, InputBase } from '@mui/material'
-import { Button } from 'antd'
+'use client';
 import React from 'react'
-import NavBar from '../Navbar'
-import AccViewDisc from './index-disc/AccViewDisc'
-import SearchIcon from '@mui/icons-material/Search';
 import Image from 'next/image'
+import NavBar from '@/pages/Navbar';
+import { Paper, IconButton, InputBase, Button } from '@mui/material'
+import SearchIcon from '@mui/icons-material/Search';
+import AccViewDisc from './index-disc/AccViewDisc';
 import '../../app/globals.css'
+import { useRouter } from 'next/navigation';
+
 
 
 const ViewDiscount = () => {
+  const router = useRouter();
   return (
     <div className="w-full overflow-x-hidden">
     <NavBar />
 {/* -------------------------------Header--------------------------- */}
-      <div className="w-full p-2 bg-custom-bg">
-        <ul className="flex items-center h-full">
-          <li className="flex items-center px-2">
+<div className="w-full p-2 bg-custom-bg">
+    <ul className="flex items-center h-full">
+        <li className="flex items-center px-4">
             <Image
               src="/discounts.png"
               alt="discounts"
-              className="object-contain border-4"
-              width={50}
-              height={50}
+              width={40}
+              height={40}
+              className="object-contain bg-custom-bg my-2"
             />
-          </li>
-          <li className="flex items-center">
-            <h1 className="text-header-bg text-xl md:text-2xl px-2 font-sfPro font-medium">Discounts</h1>
+        </li>
+        <li className="flex items-center">
+            <h1 className="text-header-bg text-xl xl:text-2xl px-4 font-sfPro font-medium">Discounts</h1>
           </li>
         </ul>
       </div>
@@ -55,22 +58,23 @@ const ViewDiscount = () => {
       </div>
  {/* -----------------------------Search Bar--------------------------- */}
 
-    {/* ----------------------New Combo & Gifting--------------------- */}
+    {/* ----------------------New Discount--------------------- */}
 <div className="mt-4 mb-2">
-  <Button
-    variant="solid"
-    className="bg-[#D97740] font-sfPro text-[1rem] text-transform-none"
-    style={{ width: '200px' }}
-  >
-    New Discounts
-  </Button>
+<Button
+            variant="contained"
+            onClick={() => router.push('/discount/new-discount')}
+            className="bg-[#D97740] font-sfPro text-[1rem] rounded-md text-transform-none"
+            style={{ width: '200px' }}
+          >
+        New Discounts
+      </Button>
 </div>
 
       {/* ------------------------Export as CSV----------------------- */}
       <div>
         <Button
           variant="outlined"
-          className="border-[#D97740] text-[#D97740] font-sfPro text-[1rem] text-transform-none"
+          className="border-[#D97740] text-[#D97740] font-sfPro text-[1rem] text-transform-none rounded-md"
           style={{ width: '200px' }}
         >
           Export as CSV
