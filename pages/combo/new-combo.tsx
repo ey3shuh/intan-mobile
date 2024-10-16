@@ -3,9 +3,12 @@ import React,{useState} from 'react'
 import Image from 'next/image'
 import SelectProductPopup from '../PopUp/SelectProductPopup';
 import NewGifting from './NewGifting';
-import SubmitButton from '../../src/api/components/SubmitButton';
-import CancelButton from '../../src/api/components/CancelButton';
-import dummyData from './dummyData.json';
+import SubmitButton from '../SubmitButton';
+import CancelButton from '../CancelButton';
+import '../../app/globals.css'
+import { useRouter } from 'next/navigation';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+
 
 const NewCombo = () => {
   const [title, setTitle] = useState('');
@@ -21,8 +24,7 @@ const NewCombo = () => {
   const [selectedTypes, setSelectedTypes] = useState<{ [key: number]: string }>({});
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [item, setItem] = useState('')
-  const a = Object.keys(dummyData).map((e) => (dummyData as any)[e])
-  console.log(a)
+  const router = useRouter();
 
 
   const handleOpenPopup = () => setIsPopupOpen(true);
@@ -40,37 +42,40 @@ const NewCombo = () => {
 
 
   return (
-    <div className='mb-4'> 
-  {/* -------------------------------Header--------------------------- */}
-  <div className="w-full p-2 bg-custom-bg">
-    <ul className='flex items-center h-full'>
-      <li className="flex items-center px-2">
-        <Image
-          src='/combo1.png'
-          alt='combo'
-          className='object-contain ' // Increased border thickness
-          width={50} // Increased width
-          height={50} // Increased height
-        />
-      </li>
-      <li className="flex items-center">
-        <h1 className='text-header-bg text-xl md:text-2xl px-2 font-sfPro font-medium'>Combo & Gifting</h1> {/* Increased font size */}
-      </li>
-    </ul>
-  </div>
-  {/* -------------------------------Header--------------------------- */}
-
-{/* -----------------------------Breadcrumbs-------------------------- */}
-<div className="w-full p-4 border-b flex items-start">
-    <ul className="text-[1rem] font-sfPro font-medium text-gray-500"> {/* Increased font size */}
-      <li className="flex items-center px-2">
-        <span className="mr-2">Combo & Gifting</span>
-        <span className="mx-2">/</span>
-        <span className="ml-2 text-header-bg">New</span>
-      </li>
-    </ul>
-  </div>
-{/* -----------------------------Breadcrumbs-------------------------- */}
+    <div className='mb-4'>
+    {/* -------------------------------Header--------------------------- */}
+    <div className="w-full p-2 bg-custom-bg fixed top-0 z-50">
+      <ul className="flex items-center h-full">
+        <li className="flex items-center px-4">
+          <button>
+            <ArrowBackIosIcon
+              onClick={() => router.push('/combo')}
+              className="object-contain text-header-bg my-4"
+            />
+          </button>
+        </li>
+        <li className="flex items-center">
+          <h1 className="text-header-bg text-xl xl:text-2xl px-4 font-sfPro font-medium">
+            Combo & Gifting
+          </h1>
+        </li>
+      </ul>
+    </div>
+    {/* -------------------------------Header--------------------------- */}
+  
+    {/* -----------------------------Breadcrumbs-------------------------- */}
+    <div className="w-full p-4 border-b flex items-start mt-[70px]"> {/* Adjust margin to prevent overlap */}
+      <ul className="text-[1rem] font-sfPro font-medium text-gray-500">
+        <li className="flex items-center px-2">
+          <span className="mr-2  cursor-pointer" onClick={() => router.push('/combo')}>
+            Combo & Gifting
+          </span>
+          <span className="mx-2">/</span>
+          <span className="ml-2 text-header-bg">New</span>
+        </li>
+      </ul>
+    </div>
+    {/* -----------------------------Breadcrumbs-------------------------- */}
 
 <div className='p-4'>
 <form onSubmit={handleSubmit}> 
@@ -276,7 +281,7 @@ font-sfPro font-semibold mt-4 '>
           &times;
         </button>
         {/* Product Table */}
-        <table className="bg-gray-50 rounded-lg w-full mt-4 ">
+        <table className="bg-gray-50 rounded-lg w-full mt-4  ">
         <thead >
             <tr >
             <th colSpan={2} className='text-left border-b border-gray-300 px-4 py-2 font-sfPro font-semibold text-gray-500 '>
