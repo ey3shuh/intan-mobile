@@ -4,19 +4,24 @@ import Image from 'next/image'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import WalletIcon from '@mui/icons-material/Wallet';
-import ChatMessages from './ChatMessages';
+import ChatMessages from './view-live/ChatMessages';
 import SelectProductPopup from '@/pages/PopUp/SelectProductPopup';
 import { orange } from '@mui/material/colors';
 import Checkbox from '@mui/material/Checkbox';
-
+import { useRouter } from 'next/navigation';
+import '../../app/globals.css'
+import NavBar from '../Navbar';
 const ViewLive = () => {
 
+  const router = useRouter();
   const [code, setCode] = useState('');
   const [desc, setDesc] = useState('');
   const [comment, setComment] = useState('');
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [productGroups, setProductGroups] = useState<any[]>([]);
   const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+  const [selectedIndex, setSelectedIndex] = useState(-1); 
+  const [selectedTypes, setSelectedTypes] = useState<{ [key: number]: string }>({});
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -28,11 +33,21 @@ const ViewLive = () => {
   const handleSelectProducts = (selectedItems: any[]) => {
     setProductGroups([...productGroups, selectedItems]);
   };
+  const handleCheckboxChange = (index: React.SetStateAction<number>) => {
+    // If the clicked checkbox is already selected, unselect it
+    if (selectedIndex === index) {
+      setSelectedIndex(-1);
+    } else {
+      setSelectedIndex(index); // Set the selected checkbox index
+    }
+  };
 
   return (
-    <div >
+    <div className="pb-40">
+      <NavBar
+      />
 {/* -------------------------------Header--------------------------- */}
-<div className="w-full p-2 bg-custom-bg">
+<div className="w-full p-2 bg-custom-bg ">
  <ul className="flex items-center h-full">
     <li className="flex items-center px-2">
             <Image
@@ -49,6 +64,15 @@ const ViewLive = () => {
   </ul>
 </div>
 {/* -------------------------------Header--------------------------- */}
+<div className="w-full p-4 border-b flex items-start">
+    <ul className="text-[1rem] font-sfPro font-medium text-gray-500"> {/* Increased font size */}
+      <li className="flex items-center px-2">
+        <span className="mr-2 underline cursor-pointer" onClick={() => router.push('/live')} >Live</span>
+        <span className="mx-2">/</span>
+        <span className="ml-2 text-header-bg">View</span>
+      </li>
+    </ul>
+  </div>
 <div className='m-4'>
   <div className='text-[1.2rem] font-sfPro font-bold'>
 [Live] Free Telekung Ambar on min spend of RM550
@@ -67,27 +91,24 @@ const ViewLive = () => {
 {/* -------------------------------Duration--------------------------- */}
 <div className='py-4'>
   <p className='text-[1.2rem] font-bold text-[#5E6366] pb-2'>Duration</p>
-    <div className='border rounded-3xl p-8 font-sfPro'> 
-     <div className='flex justify-center'>
-        <span className=' text-center font-bold 
-      text-[2.1rem] text-[#6F191F] tracking-[0.5rem] '>2:
-      <p className='items-center font-medium text-center text-gray-500 text-[1rem] tracking-[0rem] pr-2'>Hours</p>
-      </span>
-        <span className=' text-center font-bold 
-      text-[2.1rem] text-[#6F191F] '>15 : 
-      <p className=' font-medium text-center text-gray-500 text-[1rem] tracking-[0rem] pl-2'>Minutes</p>
-      </span>
-        <span className=' text-center font-bold 
-      text-[2.1rem] text-[#6F191F]  '> 30
-      <p className=' font-medium text-center text-gray-500 text-[1rem] tracking-[0rem] pl-2'>Seconds</p></span> 
-     </div>
-    <div className='flex flex-cols-5 gap-4 justify-center items-center font-medium text-center text-gray-500 text-[1rem] '>
-         
-         
-
+  <div className='border rounded-3xl p-8 font-sfPro'>
+    <div className='flex flex-wrap justify-center gap-4'>
+      <div className='flex flex-col items-center'>
+        <span className='text-center font-bold text-[2.1rem] text-[#6F191F] tracking-[0.5rem]'>2</span>
+        <p className='font-medium text-center text-gray-500 text-[1rem]'>Hours</p>
+      </div>
+      <div className='flex flex-col items-center'>
+        <span className='text-center font-bold text-[2.1rem] text-[#6F191F]'>15</span>
+        <p className='font-medium text-center text-gray-500 text-[1rem]'>Minutes</p>
+      </div>
+      <div className='flex flex-col items-center'>
+        <span className='text-center font-bold text-[2.1rem] text-[#6F191F]'>30</span>
+        <p className='font-medium text-center text-gray-500 text-[1rem]'>Seconds</p>
+      </div>
     </div>
-   </div>
+  </div>
 </div>
+
 {/* -------------------------------Duration--------------------------- */}
          
 {/* --------------------------Customer behaviour---------------------- */}
@@ -205,65 +226,66 @@ font-sfPro font-semibold mt-4 '>
 </button>
 {/* -----------------------Add Product Group------------------------- */}
 {productGroups.length > 0 && (
-        <div>
-          {productGroups.map((group, index) => (
-            <div key={index} className="mb-4 relative ">
-              {/*---------------- Delete button in top-right---------------- */}
-        
-{/*---------------- Delete button in top-right---------------- */}
-<table className="bg-gray-50 rounded-lg min-w-full  ">
-  <thead>
-    <tr className="text-[1rem] text-gray-500 font-semibold border-b
-    pt-4">
-    <th className="text-left px-4 py-2">Products</th>
-      <th className="text-right px-4  py-2">Price/Stocks</th>
-      <th className="text-right px-4 py-2">Pinned</th>
+  <div className='px-4'>
+    {productGroups.map((group, index) => (
+      <div key={index} className="mb-4 relative">
+        {/* Delete button in top-right */}
+        <button
+          onClick={() => {
+            setProductGroups(prev => prev.filter((_, i) => i !== index));
+            setSelectedTypes(prev => {
+              const newState = { ...prev };
+              delete newState[index];
+              return newState;
+            });
+          }}
+          className="absolute right-2 text-gray-500 text-2xl "
+        >
+          &times;
+        </button>
+        {/* Product Table */}
+        <table className="bg-gray-50 text-[1rem] rounded-lg w-full  ">
+        <thead className='border-b border-gray-300 ' >
+        <tr className="text-[1rem] text-gray-500 font-semibold border-b
+   ">
+    <th className="text-left pb-2 pt-6 px-4 ">Products</th>
+   
+    <th className="text-left pb-2 pt-6 px-4  ">Pinned</th> 
       
     </tr>
-  </thead>
-  <tbody>
-    
-  {group.map((item: any) => (
-    <tr key={item.name}>
-      <td className="flex items-start 
-      font-sfPro font-normal 
-      text-gray-500 
-      px-4 py-4">{item.name}</td>
-      <td className="font-sfPro 
-      text-gray-500 px-4 text-right py-4">
-          {item.price && item.discountedPrice ? (<>
-            
-            <span className="text-gray-500 ">{item.price}</span><br/>
-                
-                Stocks: {item.stocks}
-              </>
-            ) : (
-              `${item.product} Products`
-            )}
-          </td>
-          
-<div className='flex justify-center'>
-<Checkbox
-  {...label}
-  defaultChecked
-  sx={{
-    color: orange[800],
-    "&.Mui-checked": {
-      color: orange[600],
-    },
-    "& .MuiSvgIcon-root": {
-      fontSize: 25, // Adjust the size of the checkbox
-    },
-  }}
-/>
-</div>
+          </thead>
+          <tbody>
+            {group.map((item: any, itemIndex: number) => (
+              <tr key={item.title}>
+                <td className="flex items-start font-sfPro font-normal text-gray-500 px-4 py-4">
+                  {item.title}
+                </td>
+                <td>
+                  <Checkbox
+                    checked={selectedIndex === itemIndex}
+                    onChange={() => handleCheckboxChange(itemIndex)}
+                    sx={{
+                      color: orange[800],
+                      "&.Mui-checked": {
+                        color: orange[600],
+                      },
+                      "& .MuiSvgIcon-root": {
+                        fontSize: 25,
+                      },
+                    }}
+                    className='flex justify-center'
+                  />
+                </td>
+                </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    ))}
+  </div>
+)}
 
-    </tr>
-  ))}
-  </tbody>
-  </table>
-     
-  </div>))}</div>)}
+
 {/* Popup Component */}
 <SelectProductPopup
         isOpen={isPopupOpen}
