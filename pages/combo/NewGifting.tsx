@@ -1,6 +1,6 @@
 'use client';
 import React,{useState} from 'react'
-import ToggleDiscount from '../discount/ToggleDiscount';
+import ToggleDisc from '../discount/new-discount/ToggleDisc';
 import SelectProductPopup from '../PopUp/SelectProductPopup';
 
 
@@ -80,7 +80,7 @@ const NewGifting = () => {
     />
   </div>
   <div className='flex justify-end items-center pl-2 pt-7 '>
-    <ToggleDiscount/>
+    <ToggleDisc/>
   </div>
 </div>
 {/* -----------------------Add Product Group------------------------- */}
@@ -102,7 +102,7 @@ font-sfPro font-semibold mt-4  '>
 {productGroups.length > 0 && (
   <div>
     {productGroups.map((group, index) => (
-      <div key={index} className="relative mb-4 border border-gray-300 rounded-lg"> {/* Add relative positioning here */}
+      <div key={index} className="relative mb-4 border m-22 border-gray-300 rounded-lg"> {/* Add relative positioning here */}
         {/*---------------- Delete button in top-right---------------- */}
         <button
           onClick={() => {
@@ -169,28 +169,29 @@ font-sfPro font-semibold mt-4  '>
 {/*------------------------- Gifting Options---------------------------*/}
 
 {/*---------------------------- Group Table-------------------------- */}
-        <table className='bg-gray-50 rounded-lg  min-w-full '>
-          <thead>
-            <tr>
-              <th colSpan={2} className='text-left border-b border-gray-300 px-4 py-2 font-sfPro font-semibold text-gray-500 
-              '>
-                Group {index + 1}
+<table className="bg-gray-50 rounded-lg w-full mt-4     ">
+        <thead >
+            <tr >
+            <th colSpan={2} className='text-left border-b border-gray-300 px-4 py-2 font-sfPro font-semibold text-gray-500 '>
+            Group {index + 1} 
               </th>
+              
             </tr>
           </thead>
           <tbody>
             {group.map((item: any) => (
-              <tr key={item.name}>
-                <td className='flex items-start font-sfPro font-normal text-gray-500 px-4 py-4'>
-                  {item.name}
+              <tr key={item.title}>
+                <td className="flex items-start font-sfPro font-normal text-gray-500 px-4 py-4">
+                  {item.title}
                 </td>
-                <td className='font-sfPro text-right text-gray-500 px-4 py-4'>
-                  {item.price ? (
+                <td className="font-sfPro text-gray-500 px-4 text-right py-4">
+                  {item.price !== undefined && item.stocks !== undefined ? (
                     <>
-                      {item.price} <br /> Stocks: {item.stocks}
+                      <span>{item.price}</span> <br />
+                      Stocks: {item.stocks}
                     </>
                   ) : (
-                    `${item.product} Products`
+                    'N/A'
                   )}
                 </td>
               </tr>
