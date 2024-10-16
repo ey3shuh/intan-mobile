@@ -1,32 +1,32 @@
 'use client';
-import React  , {useState} from 'react'
-import Image from 'next/image'
-
-import ImageCard from './ImageCard';
-import SubmitButton from '../../src/api/components/SubmitButton';
-import CancelButton from '../../src/api/components/CancelButton';
-
+import React, { useState } from 'react';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import ImageCard from './ImageCard'; // Ensure the path is correct
+import SubmitButton from '../SubmitButton';
+import CancelButton from '../CancelButton';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+        
 
 const NewInstory = () => {
 
     const [title, setTitle] = useState('');
     const [link, setLink] = useState('');
     const [status, setStatus] = useState('Draft');
+    const router = useRouter();
 
   return (
     <div>
         
         {/* Header Section */}
-    <div className="w-full p-2 bg-custom-bg">
+    <div className="w-full p-2 bg-custom-bg fixed top-0 z-50 ">
         <ul className="flex items-center h-full">
           <li className="flex items-center px-4">
-            <Image
-              src="/instagram-stories.png"
-              alt="live"
-              width={40}
-              height={40}
-              className="object-contain bg-custom-bg my-2"
-            />
+            <button> 
+        <ArrowBackIosIcon
+        onClick={() => router.push('/discount')}
+          className="object-contain text-header-bg my-4"
+        /></button>
           </li>
           <li className="flex items-center">
             <h1 className="text-header-bg text-xl xl:text-2xl px-4 font-sfPro font-medium">
@@ -37,16 +37,17 @@ const NewInstory = () => {
       </div>
       {/* ------------------------------------------------------------ */}
 
-      {/* Breadcrumbs */}
-      <div className="w-full p-3 border-b flex items-start">
-        <ul className="text-[1rem] font-sfPro font-medium text-gray-500">
-          <li className="text-[1rem] font-sfPro font-medium text-gray-500 flex items-center px-2">
-            <span className="mr-2">Instory</span>
-            <span className="mx-2">/</span>
-            <span className="ml-2 text-header-bg">New</span>
-          </li>
-        </ul>
-      </div>
+{/* -----------------------------Breadcrumbs-------------------------- */}
+<div className="w-full p-4 border-b flex items-start mt-[70px]">
+    <ul className="text-[1rem] font-sfPro font-medium text-gray-500"> {/* Increased font size */}
+      <li className="flex items-center px-2">
+        <span className="mr-2 underline cursor-pointer" onClick={() => router.push('/instory')} >Instory</span>
+        <span className="mx-2">/</span>
+        <span className="ml-2 text-header-bg">New</span>
+      </li>
+    </ul>
+  </div>
+{/* -----------------------------Breadcrumbs-------------------------- */}
       {/* ------------------------------------------------------------ */}
       <div className='m-4'>
 
