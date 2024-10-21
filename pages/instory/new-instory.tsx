@@ -50,24 +50,27 @@ const NewInstory = () => {
               reject(error);
             },
             async () => {
-              imageUploadUrl = await getDownloadURL(uploadTask.snapshot.ref);
-              resolve(true);
+              try {
+                imageUploadUrl = await getDownloadURL(uploadTask.snapshot.ref);
+                console.log('Image URL:', imageUploadUrl);
+                resolve(true);
+              } catch (error) {
+                console.error('Error getting download URL:', error);
+                reject(error);
+              }
             }
           );
         });
       }
-
-      // Create the collection if it doesn't exist
-      await setDoc(doc(db, 'new-instory', 'initialDocument'), {}); 
-
-      // Prepare data to send to Firestore
-      const instoryData = {
-        title,
-        link,
-        status,
-        imageUrl: imageUploadUrl, // Save the uploaded image URL
-      };
-
+  
+     // Prepare data to send to Firestore
+     const instoryData = {
+      title,
+      link,
+      status,
+      imageUrl: imageUploadUrl, // Save the uploaded image URL
+    };
+  
       // Log the data being sent to Firestore
       console.log('Instory Data:', instoryData);
 
@@ -75,20 +78,27 @@ const NewInstory = () => {
       const docRef = await addDoc(collection(db, 'new-instory'), instoryData);
       console.log('Document written with ID: ', docRef.id);  // Log successful document creation
 
-      // Reset the form fields
-      setTitle('');
-      setLink('');
-      setStatus('Draft');
-      setImageFile(null);
-      setImagePreviewUrl(null);
+   // Reset the form fields
+   setTitle('');
+   setLink('');
+   setStatus('Draft');
+   setImageFile(null);
+   setImagePreviewUrl(null);
 
-      // Navigate back to the instory page after submission
+   // Navigate back to the instory page after submission
       router.push('/instory');
     } catch (error) {
-      console.error('Error saving instory:', error); // Log any errors
+      if (error instanceof Error) {
+        console.error('Error saving instory:', error);
+        alert('Error saving instory: ' + error.message);
+      } else {
+        console.error('An unknown error occurred:', error);
+        alert('An unknown error occurred.');
+      }
     }
   };
-
+  
+  
   return (
     <div>
       {/* Header Section */}
@@ -186,7 +196,7 @@ const NewInstory = () => {
             />
           </div>
 
-          {/* Image Upload */}
+          {/* Image Upload
           <div className="my-6">
             <label className="block mb-1 text-[1rem] text-gray-500 font-sfPro font-semibold">Image</label>
             <div className="border-dashed border-2 border-gray-400 rounded-lg p-6 text-center font-sfPro text-[1rem]">
@@ -209,10 +219,10 @@ const NewInstory = () => {
                 required
               />
             </div>
-          </div>
+          </div> */}
 
           {/* Image Preview */}
-          {imagePreviewUrl && (
+          {/* {imagePreviewUrl && (
             <div className="flex flex-col items-center my-6">
               <div className="w-24 h-24 
               border-4 border-orange-500 
@@ -225,7 +235,7 @@ const NewInstory = () => {
               </div>
               <span className="text-center mt-2 font-sfPro">{title}</span>
             </div>
-          )}
+          )} */}
 
           {/* Buttons */}
           <div className="flex justify-center gap-4 my-4 fixed bottom-0 inset-x-0 mx-auto">
